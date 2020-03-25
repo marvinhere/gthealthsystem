@@ -103,6 +103,8 @@ div.scrollmenu a:hover {
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
+
   <script src="js/init.js"></script>
   <!-- Add Firebase products that you want to use -->
   <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
@@ -110,7 +112,7 @@ div.scrollmenu a:hover {
   <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
   <script type="text/javascript" src="js/qrcode.js"></script>
   <script type="text/javascript">
-
+  firebase.analytics();
     firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
