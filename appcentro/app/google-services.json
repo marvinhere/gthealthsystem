@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "233767847166",
+    "firebase_url": "https://gthealthsystem.firebaseio.com",
+    "project_id": "gthealthsystem",
+    "storage_bucket": "gthealthsystem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233767847166:android:a5b8ccc8bba582fff651af",
+        "android_client_info": {
+          "package_name": "com.example.social"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "233767847166-adbjivse58q2ubviu8cmnbeb968ocig4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.social",
+            "certificate_hash": "ba976469830fe212fdee5833fdc554682951f83e"
+          }
+        },
+        {
+          "client_id": "233767847166-am110qt81em9r5m2von6upvpojihotm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqzoE8e1HRksorJxZTXZrnvvB91BA_Dlc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "233767847166-am110qt81em9r5m2von6upvpojihotm6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

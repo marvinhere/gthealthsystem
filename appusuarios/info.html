@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card</title>
+  <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+  <style type="text/css">
+    html body{
+      
+    }
+    .app-title{
+      font-weight: bold;
+      font-family: 'Merriweather', sanserif;
+    }
+    .general-content{
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 20px;
+    }
+
+    .card-border{
+      border-radius: 15px;
+    }
+    .card-img-border{
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .img-profile{
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .card-username{
+      font-weight: bold;
+      color: black;
+      font-size: 20px;
+      margin-left: 10px;
+    }
+    .navbar-icon{
+      width: 30px;
+      height: 30px;
+    }
+
+    div.scrollmenu {
+  background-color: #fff;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.bold{
+  font-weight: bold;
+}
+.imgCard{
+  height: 150px;
+  object-fit: cover;
+}
+  </style>
+
+</head>
+<body>
+  <nav class="navbar navbar-light fixed-top" style="background-color: #fff;">
+  <span class="navbar-brand mb-0 h1">
+    <h2 class="app-title"><img src="image/icon.png" width="40px;" height="40px;"></h2></span>
+    <form class="form-inline">
+
+    <img src="https://img.icons8.com/ios-glyphs/30/000000/logout-rounded-left.png" class="navbar-icon" onclick="logout();">
+  </form>
+  </nav>
+
+  
+
+  <div class="general-content container text-center mt-5" id="general">
+    <small>Por favor, llena todos los campos con información verídica.</small>
+    <div class="form-group">
+    <label for="exampleInputEmail1">Nombres</label>
+    <input type="text" class="form-control" id="name">
+  </div>
+
+
+
+    <div class="form-group">
+    <label for="exampleInputEmail1">Apellidos</label>
+    <input type="text" class="form-control" id="lastname">
+  </div>
+  
+
+
+    <div class="form-group">
+    <label for="exampleInputEmail1">Número de teléfono</label>
+    <input type="number" class="form-control" id="phone" min="8" max="8">
+  </div>
+ 
+
+    <div class="form-group">
+    <label for="exampleInputEmail1">Calle dónde vive</label>
+    <input type="text" class="form-control" id="street">
+  </div>
+  <div id="boton">
+    <button type="button" class="btn btn-primary" onclick="save();" id="save" style="display: none;">Guardar</button>
+  </div>
+  
+</div>
+  
+
+
+
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <script src="js/init.js"></script>
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+  <script type="text/javascript" src="js/qrcode.js"></script>
+  <script type="text/javascript">
+    var inputName = document.getElementById('name');
+    var inputLastName = document.getElementById('lastname');
+    var inputPhone = document.getElementById('phone');
+    var inputStreet = document.getElementById('street');
+
+    firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+
+    var database = firebase.database();
+   firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
+    if(snapshot.val()==null){
+      var boton = document.getElementById('boton');
+      boton.innerHTML = '<button type="button" class="btn btn-primary" onclick="save2();" id="save" style="display: inline-block;">Guardar</button>';
+      
+    }else{
+      var save = document.getElementById('save');
+      save.style.display = 'inline-block';
+       var name = snapshot.val().name;
+  var lastname = snapshot.val().lastname;
+  var phone = snapshot.val().phone;
+  var street = snapshot.val().street;
+
+  inputName.value = name;
+  inputLastName.value = lastname;
+  inputPhone.value = phone;
+  inputStreet.value = street;
+    }
+ 
+});
+    
+    // ...
+  } else {
+    // User is signed out.
+    // ...
+    window.location.href = "login.html";
+  }
+});
+    
+function save(){
+  if(validation()){
+    var user = firebase.auth().currentUser; 
+  firebase.database().ref('users/' + user.uid).update({
+    name: inputName.value,
+    lastname: inputLastName.value,
+    phone: inputPhone.value,
+    street: inputStreet.value
+  })
+  .then(function() {
+    window.location.href = "index.html";
+  })
+  .catch(function(error) {
+    console.log('Synchronization failed');
+  });
+  }else{
+    alert("Rellene todos los campos");
+  }
+  
+}
+
+function save2(){
+  if(validation()){
+    var user = firebase.auth().currentUser; 
+  firebase.database().ref('users/' + user.uid).update({
+    name: inputName.value,
+    lastname: inputLastName.value,
+    phone: inputPhone.value,
+    street: inputStreet.value,
+    status: "clean"
+  })
+  .then(function() {
+    window.location.href = "index.html";
+  })
+  .catch(function(error) {
+    console.log('Synchronization failed');
+  });
+  }else{
+    alert("Rellene todos los campos");
+  }
+  
+}
+
+
+  function logout(){
+    firebase.auth().signOut().then(function() {
+  // Sign-out successful.
+  window.location.href = "login.html";
+}).catch(function(error) {
+  // An error happened.
+});
+  }
+
+  function validation(){
+    var answer = false;
+    if(inputName.value.length>0 && inputLastName.value.length>0 && inputPhone.value.length>0 && inputStreet.value.length>0){
+      if(inputPhone.value.length==8){
+        answer = true;
+      }else{
+        alert("El número de teléfono tiene que tener 8 dígitos.")
+      }
+      
+    }
+    return answer;
+  }
+  </script>
+
+
+</body>
+</html>
+

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Consultar</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+  <a class="navbar-brand" href="#"><img src="image/icon.png" width="50px;" height="50px;"> GTHealth System</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <button class="btn btn-outline-primary my-2 my-sm-0 ml-5" onclick="logout()">Salir</button>
+  </div>
+</nav>
+	<br>
+	<div class="container">
+
+	  <br>
+	  <!-- Nav tabs -->
+	  <ul class="nav nav-tabs" role="tablist">
+	    <li class="nav-item">
+	      <a class="nav-link active" data-toggle="tab" href="#home">Bloquear usuarios</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" data-toggle="tab" href="#menu1">Bloquear por fecha</a>
+	    </li>
+	   
+	  </ul>
+	  <br>
+	  <!-- Tab panes -->
+	  <div class="tab-content">
+	    <div id="home" class="container tab-pane active"><br>
+	    	<!--Buscar usuario-->
+	  	<div class="form-inline">
+	  		Buscar usuario por apellidos:<br>
+	  	</div>
+	  	<div class="container">
+	  		<div class="form-check">
+  				<input class="form-check-input" type="radio" name="exampleRadios" id="apellidos" checked>
+  				<label class="form-check-label" for="exampleRadios1">
+    				Apellidos
+  				</label>
+			</div>
+
+			<div class="form-check">
+  				<input class="form-check-input" type="radio" name="exampleRadios" id="codigo">
+  				<label class="form-check-label" for="exampleRadios1">
+    				Código
+  				</label>
+			</div>
+			<br>
+		    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="user">
+		    <br>
+			<button class="btn btn-outline-primary" onclick="verification()">Search</button>
+		</div>
+		<br>
+	      <!--Tabla de contenido-->
+			<table class="table table-bordered text-justify" id="mostrarTabla">
+			  <thead>
+			    <tr>
+			      <th scope="col">Nombre</th>
+			      <th scope="col">Apellido</th>
+			      <th scope="col">Cel</th>
+			      <th scope="col">Direccion</th>
+			      <th scope="col">Bloquear</th>
+			      <th scope="col" >Bloquear usuario y personas cercanas</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			
+			  </tbody>
+			</table>	
+	    </div>
+	    <div id="menu1" class="container tab-pane fade"><br>
+	    	<div class="form-inline">
+	  		Buscar por fecha:<br>
+	  	</div>
+	  	<div class="container">
+			<br>
+			<div class="row">
+				<div class="col text-center">
+					<label>Código del Lugar</label>
+					<input type="email" class="form-control" id="place" aria-describedby="emailHelp" placeholder="Ingresa el código del lugar"><br>
+		    <input type="date" id="dateStart">
+		    <input type="time" id="timeStart" name="appt"
+       min="09:00" max="18:00" required>
+			</div>
+				
+			</div>
+			
+		    <br>
+			<button class="btn btn-outline-primary mb-5" onclick="searchDate()">Search</button><br>
+		</div>
+	    	<!--Tabla de contenido-->
+			<table class="table table-bordered" id="mostrarDate">
+			  <thead>
+			    <tr>
+			      
+			    </tr>
+			  </thead>
+			  <tbody>
+			    
+			  </tbody>
+			</table>
+
+	    </div>
+	  </div>
+	</div>
+	<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
+
+	<script type="text/javascript" src="js/connect.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript">
+		firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // Si el usuario se ha logeado dirigirlo a:
+   
+    // ...
+  } else {
+  	window.location.href = "login.html";
+  }
+});
+	</script>
+</body>
+</html>
