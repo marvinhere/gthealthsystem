@@ -9,4 +9,4 @@ For system operation is necessary to use 3 aplications:
 3. Third application called webappmonitoreo is a webbapp where the authorities can find the user historial and block them.
 
 *This works with Firebase.
-More Documentation: https://medium.com/@marvinjosue97/sistema-b%C3%A1sico-para-detecci%C3%B3n-de-personas-que-estuvieron-cerca-de-una-persona-contagiada-por-un-20eeb586a85c
+More Documentation: https://medium.com/@marvinhere/sistema-b%C3%A1sico-para-detecci%C3%B3n-de-personas-que-estuvieron-cerca-de-una-persona-contagiada-por-un-20eeb586a85c
