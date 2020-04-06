@@ -16,8 +16,9 @@ public class Verification extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification);
         String text = getIntent().getStringExtra("text");
+        String name = getIntent().getStringExtra("name");
         TextView status = findViewById(R.id.status);
-        status.setText(text);
+        status.setText(name+"\n"+text);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         // Check if user is signed in (non-null) and update UI accordingly.

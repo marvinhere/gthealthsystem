@@ -43,15 +43,15 @@
   <script type="text/javascript" src="js/connect.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
   <script type="text/javascript">
-    firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
+firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
     // User is signed in.
-  userStatus();
+		userStatus();
     // ...
-  } else {
+	} else {
     // User is signed out.
     // ...
-  }
+	}
 });
 
   </script>

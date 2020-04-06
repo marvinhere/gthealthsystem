@@ -90,11 +90,13 @@ public class PrincipalActivy extends AppCompatActivity {
                 mDatabase = FirebaseDatabase.getInstance().getReference("users").child(result.getContents());
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                         if(dataSnapshot.getValue()!=null){
                             //Read if status is clean
                             if(dataSnapshot.child("status").getValue().equals("clean")){
                                 //Save in the userPlaces Area
+                                final String name = dataSnapshot.child("name").getValue(String.class);
+                                final String lastname = dataSnapshot.child("lastname").getValue(String.class);
                                 DatabaseReference pushReference = FirebaseDatabase.getInstance().getReference("userPlaces").push();
                                 //Get the push key
                                 final String push = pushReference.getKey();
@@ -111,6 +113,7 @@ public class PrincipalActivy extends AppCompatActivity {
                                                     if(databaseError==null){
                                                         Intent i = new Intent(PrincipalActivy.this,Verification.class);
                                                         i.putExtra("text","LISTO");
+                                                        i.putExtra("name",name+" "+lastname);
                                                         startActivity(i);
 
                                                     }else{

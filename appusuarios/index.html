@@ -83,24 +83,19 @@ div.scrollmenu a:hover {
 
 </head>
 <body>
-  <nav class="navbar navbar-light fixed-top" style="background-color: #fff;">
-  <span class="navbar-brand mb-0 h1">
-    <h2 class="app-title"><img src="image/icon.png" width="40px;" height="40px;"></h2></span>
-    <form class="form-inline">
-    
-    <img src="https://img.icons8.com/ios-glyphs/30/000000/logout-rounded-left.png" class="navbar-icon" onclick="logout();">
-  </form>
-  </nav>
+	<nav class="navbar navbar-light fixed-top" style="background-color: #fff;">
+		<span class="navbar-brand mb-0 h1">
+		<h2 class="app-title"><img src="image/icon.png" width="40px;" height="40px;"></h2></span>
+		<form class="form-inline">
+			<img src="https://img.icons8.com/ios-glyphs/30/000000/logout-rounded-left.png" class="navbar-icon" onclick="logout();">
+		</form>
+	</nav>
 
-  
-
-  <div class="general-content container text-center" id="general" style="margin-top: 60px;">
-    <p id="info" style="color:#10D100;"></p>
-    
-  
-  <div id="qr" class="mt-3"></div>
-  <p>Este código ayudará a detectar si corres el riesgo de contraer el virus Covid-19. Actualmente solo funciona en Panajachel</p>
-  </div>
+	<div class="general-content container text-center" id="general" style="margin-top: 60px;">
+		<p id="info" style="color:#10D100;"></p>
+		<div id="qr" class="mt-3"></div>
+		<p>Este código ayudará a detectar si corres el riesgo de contraer el virus Covid-19. Actualmente solo funciona en Panajachel</p>
+	</div>
 
   <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
   <script src="js/init.js"></script>
@@ -111,59 +106,56 @@ div.scrollmenu a:hover {
   <script type="text/javascript" src="js/qrcode.js"></script>
   <script type="text/javascript">
 
-    firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
+firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
     // User is signed in.
-    var info = document.getElementById('info');
-   var database = firebase.database();
-   firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
-    if(snapshot.val()!=null){
-      var name = snapshot.val().name;
-  var lastname = snapshot.val().lastname;
-  var status = snapshot.val().status;
-  var phone = snapshot.val().phone;
-  var street = snapshot.val().street;
-
-  if(status=="blocked"){
-    blocked();
-  }
-  var texto = "<b>"+name+" "+lastname+"</b><br>"+user.uid+"<br>"+phone+"<br>"+street+'<br><a href="/coronavirus/info.html">Editar Información</a>';
-  info.innerHTML = texto;
-  var qr = document.getElementById('qr');
-    qr.innerHTML = create_qrcode(user.uid);
+		var info = document.getElementById('info');
+		var database = firebase.database();
+		firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
+			if(snapshot.val()!=null){
+				var name = snapshot.val().name;
+				var lastname = snapshot.val().lastname;
+				var status = snapshot.val().status;
+				var phone = snapshot.val().phone;
+				var street = snapshot.val().street;
+				if(status=="blocked"){
+					blocked();
+				}
+				var texto = "<b>"+name+" "+lastname+"</b><br>"+user.uid+"<br>"+phone+"<br>"+street+'<br><a href="/coronavirus/info.html">Editar Información</a>';
+				info.innerHTML = texto;
+				var qr = document.getElementById('qr');
+				qr.innerHTML = create_qrcode(user.uid);
   // ...
-    }
-    if(snapshot.val()==null){
+			}
+				if(snapshot.val()==null){
+					var general = document.getElementById('general');
+					general.innerHTML ='<h4>Por favor, brinda tu datos antes de seguir.</h4><a href="info.html">Editar Información</a>';
 
-      var general = document.getElementById('general');
-      general.innerHTML ='<h4>Por favor, brinda tu datos antes de seguir.</h4><a href="info.html">Editar Información</a>';
-
-    }
-  
-    });
+				}
+		});
     // ...
-  } else {
+	} else {
     // User is signed out.
     // ...
-    window.location.href = "login.html";
-  }
+		window.location.href = "login.html";
+	}
 });
     
 
 
-  function logout(){
-    firebase.auth().signOut().then(function() {
+function logout(){
+	firebase.auth().signOut().then(function() {
   // Sign-out successful.
-  window.location.href = "login.html";
-}).catch(function(error) {
+		window.location.href = "login.html";
+	}).catch(function(error) {
   // An error happened.
-});
+	});
   }
 
-  function blocked(){
-    var info = document.getElementById('info');
-    info.style.color = "#FA2E01";
-  }
+function blocked(){
+	var info = document.getElementById('info');
+	info.style.color = "#FA2E01";
+}
   </script>
 
 

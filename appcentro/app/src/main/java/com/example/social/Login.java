@@ -15,6 +15,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
 
@@ -82,8 +87,25 @@ public class Login extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user){
         if(user!=null){
-            Intent i = new Intent(Login.this, PrincipalActivy.class);
-            startActivity(i);
+            DatabaseReference data = FirebaseDatabase.getInstance().getReference("places").child(user.getUid());
+            data.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getValue()==null){
+                        Toast.makeText(Login.this, "Sin autorización.",
+                                Toast.LENGTH_SHORT).show();
+                    }else{
+                        Intent i = new Intent(Login.this, PrincipalActivy.class);
+                        startActivity(i);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
         }else{
 
         }
